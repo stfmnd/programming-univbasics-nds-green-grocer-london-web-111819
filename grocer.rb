@@ -31,15 +31,22 @@ def consolidate_cart(cart)
 end
 
 def apply_coupons(cart, coupons)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+  cart.each do |item|
+    coupons.each do |coupon|
+      if item[:count] == coupon[:num]
+        coupon_hash = {
+          :item => item[:item] + ' W/COUPON'
+        }
+        cart.push(coupon_hash)
+        cost_of_coupon = coupon[:cost] / coupon[:num]
+        binding.pry
+    end
+    end
+  end
 end
 
 def apply_clearance(cart)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+  
 end
 
 def checkout(cart, coupons)
