@@ -12,11 +12,22 @@ def find_item_by_name_in_collection(name, collection)
 end
 
 def consolidate_cart(cart)
-  consolidated_cart = []
-  cart.each do |item|
-    item[:count] = 1
-    consolidated_cart.push(item)
-  end
+ new_cart = []
+ cart.each do |item|
+   new_cart_item = find_item_by_name_in_collection(item[:item], new_cart)
+   if new_cart_item
+     new_cart_item[:count] += 1
+   else
+     new_cart_item = {
+       :item => item[:item],
+       :price => item[:price],
+       :clearance => item[:clearance],
+       :count => 1
+     }
+     new_cart.push(new_cart_item)
+   end
+ end
+ new_cart
 end
 
 def apply_coupons(cart, coupons)
