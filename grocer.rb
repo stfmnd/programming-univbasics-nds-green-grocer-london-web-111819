@@ -35,10 +35,13 @@ def apply_coupons(cart, coupons)
     coupons.each do |coupon|
       if item[:count] == coupon[:num]
         coupon_hash = {
-          :item => item[:item] + ' W/COUPON'
+          :item => coupon[:item] + ' W/COUPON',
+          :price => coupon[:cost] / coupon[:num],
+          :clearance => item[:clearance],
+          :count => coupon[:num]
         }
         cart.push(coupon_hash)
-        cost_of_coupon = coupon[:cost] / coupon[:num]
+        item[:count] = item[:count] - coupon[:num]
         binding.pry
     end
     end
