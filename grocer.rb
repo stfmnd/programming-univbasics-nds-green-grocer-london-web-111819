@@ -40,8 +40,8 @@ def apply_coupons(cart, coupons)
           :clearance => item[:clearance],
           :count => coupon[:num]
         }
-        cart.push(coupon_hash)
         item[:count] = item[:count] - coupon[:num]
+        cart.push(coupon_hash)
     end
     end
   end
@@ -58,34 +58,23 @@ def apply_clearance(cart)
 end
 
 def checkout(cart, coupons)
-  # Consult README for inputs and outputs
-  #
-  # This method should call
-  # * consolidate_cart
-  # * apply_coupons
-  # * apply_clearance
-  #
-  # BEFORE it begins the work of calculating the total (or else you might have
-  # some irritated customers
   final_cart = consolidate_cart(cart)
   apply_coupons(final_cart, coupons)
   apply_clearance(final_cart)
   items_price = 0
   total = 0
+  
   final_cart.each do |item|
-   if item[:clearance] == false && coupons.length == 0
-      items_price = item[:count] * item[:price]
-      total += items_price
-    elsif final_cart.length > 1 && coupons.length == 1
-      items_price = item[:count] * item[:price]
-      total += items_price
-    else
+  if item[:clearance] == false && coupons.length == 0
+    items_price = item[:count] * item[:price]
+    total += items_price
+  else 
     items_price = item[:count] * item[:price]
     total += items_price
     # binding.pry
-   end
   end
-  if total > 100 
+  end
+  if total >= 100 
     total = total - (total * 0.1)
   end
   total
