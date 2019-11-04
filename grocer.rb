@@ -33,7 +33,7 @@ end
 def apply_coupons(cart, coupons)
   cart.each do |item|
     coupons.each do |coupon|
-      if coupon[:item] == item[:item]
+      if coupon[:item] == item[:item] && item[:count] >= coupon[:num]
         coupon_hash = {
           :item => coupon[:item] + ' W/COUPON',
           :price => coupon[:cost] / coupon[:num],
